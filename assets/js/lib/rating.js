@@ -1,11 +1,37 @@
-const initRating = () => {
+/* Initialize and display the Thank you for notation */
+function showThankYou(parent, level) {
+    const div = document.createElement('div');
+    div.classList.add("rating-thank-frame");
+
+    const divlogo = document.createElement('div');
+    divlogo.classList.add('rating-logo');
+    const imglogo = document.createElement('img');
+    imglogo.src = "./assets/img/illustration-thank-you.svg";
+    divlogo.append(imglogo);
+    div.append(divlogo);
+
+    const p = document.createElement('p');
+    p.classList.add('rating-notation');
+    p.innerText = "You selected " + level.toString() + " out of 5";
+    div.append(p);
+
+    const h2 = document.createElement('h2');
+    h2.classList.add('rating-title');
+    h2.innerText = "Thank you!";
+    div.append(h2);
+
+    const p2 = document.createElement('p');
+    p2.classList.add('rating-thank-text');
+    p2.innerText = "We appreciate you taking the time to give a rating. If you ever need more support, don’t hesitate to get in touch!";
+    div.append(p2);
+
+    parent.append(div);
+}
+
+/* Initialize and display the request for notation  */
+
+function showRequestForNotation(parent) {
     let selectedLevel = 0;
-
-    console.log('initRating');
-
-    const parent = document.querySelector('.container');
-
-    /* Create full control frame */
 
     const div = document.createElement('div');
     div.classList.add("rating-frame");
@@ -92,10 +118,32 @@ const initRating = () => {
             }, 3000)
         }
         else {
+            localStorage.setItem("userRating", selectedLevel.toString());
             div.remove();
+
+            showThankYou(parent, selectedLevel);
         }
     });
+}
 
+const initRating = () => {
+    console.log('initRating');
+
+    const parent = document.querySelector('.container');
+
+    const localStoredLevel = localStorage.getItem("userRating");
+    console.log(localStoredLevel);
+
+    /* Not previously set */
+    if (localStoredLevel === null)
+        showRequestForNotation(parent);
+    else
+        showThankYou(parent, parseInt(localStoredLevel));
+
+    const clear = document.querySelector('.clear');
+    clear.addEventListener('click', () => {
+        localStorage.clear();
+    });
 };
 
 export { initRating };
