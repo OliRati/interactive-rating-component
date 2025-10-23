@@ -141,7 +141,7 @@
 /* LocalStorage clear for debugging */
 
 .clear {
-    display: none;
+    /* display: none; */
     background-color: lightblue;
     border-radius: 1rem;
     padding: 0.5rem 1rem;

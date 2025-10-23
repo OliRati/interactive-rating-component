@@ -1,4 +1,5 @@
 /* Initialize and display the Thank you for notation */
+
 function showThankYou(parent, level) {
     const div = document.createElement('div');
     div.classList.add("rating-thank-frame");
@@ -56,6 +57,10 @@ function showRequestForNotation(parent) {
     const btncontainer = document.createElement('div');
     btncontainer.classList.add('rating-btncontainer');
 
+    /*
+     * Creation et gestion des boutons de notation
+     */
+
     for (let i = 1; i < 6; i++) {
         const btndiv = document.createElement("div");
         btndiv.classList.add('rating-level')
@@ -84,15 +89,24 @@ function showRequestForNotation(parent) {
     }
     div.append(btncontainer);
 
+    /* Ajout du bouton Submit */
+
     const submitButton = document.createElement("div");
     submitButton.classList.add('rating-submit')
     submitButton.innerText = "Submit"
     div.append(submitButton);
 
+    /* Ajout d'une zone d'avertissement */
+
     const error = document.createElement('div');
     error.classList.add('rating-error');
 
     div.append(error);
+
+    /*
+     * Mise a jour du DOM à la fin pour limité
+     * Le rafraichissement de la page au maximum
+     */
 
     parent.append(div);
 
@@ -126,6 +140,8 @@ function showRequestForNotation(parent) {
     });
 }
 
+/* Initialisation du composant Rating */
+
 const initRating = () => {
     console.log('initRating');
 
@@ -134,11 +150,16 @@ const initRating = () => {
     const localStoredLevel = localStorage.getItem("userRating");
     console.log(localStoredLevel);
 
-    /* Not previously set */
+    /* item Not previously set */
     if (localStoredLevel === null)
         showRequestForNotation(parent);
     else
         showThankYou(parent, parseInt(localStoredLevel));
+
+    /*
+     * Gestion du bouton caché pour reinitialiser le
+     * local storage pour facilité le debuggage
+     */
 
     const clear = document.querySelector('.clear');
     clear.addEventListener('click', () => {
